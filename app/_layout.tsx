@@ -26,7 +26,7 @@ export default function RootLayout() {
         screenOptions={{
           headerStyle: { backgroundColor: colors.background },
           headerShadowVisible: false,
-          headerTitleStyle: { fontFamily: 'Fredoka_600SemiBold' },
+          headerTitleStyle: { fontFamily: 'Silkscreen_700Bold', fontSize: 30 },
           contentStyle: { backgroundColor: colors.background },
         }}
       >

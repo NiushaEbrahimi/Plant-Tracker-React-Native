@@ -1,7 +1,7 @@
 import PlantIcon from '@/src/utils/plantIcons';
 import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
-import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { PixelButton, PixelPanel } from '../../src/components/Pixel';
 import { WaterRing } from '../../src/components/WaterRing';
 import { usePlantStore } from '../../src/store/usePlantStore';
@@ -51,14 +51,16 @@ export default function PlantDetailScreen() {
         <Text style={[type.body, styles.species]}>{plant.species}</Text>
       </View>
 
-      <PixelPanel style={styles.statsRow}>
-        <Stat label="Status" value={wateringStatusLabel(plant)} />
-        <Stat label="Last watered" value={formatLastWatered(plant)} />
-        <Stat label="Every" value={`${plant.waterIntervalDays} days`} />
-      </PixelPanel>
+      <View>
+        <PixelPanel style={styles.statsRow}>
+          <Stat label="Status" value={wateringStatusLabel(plant)} />
+          <Stat label="Last watered" value={formatLastWatered(plant)} />
+          <Stat label="Every" value={`${plant.waterIntervalDays} days`} />
+        </PixelPanel>
+      </View>
 
       <PixelButton onPress={() => waterPlant(plant.id)} style={styles.waterButton}>
-        <Text style={styles.waterButtonText}>💧 Water now</Text>
+        <Text style={styles.waterButtonText}><Image source={require("../../assets/droplet_icon.png")} style={{width:26,height:26}}/> Water now</Text>
       </PixelButton>
 
       <Pressable style={styles.deleteButton} onPress={confirmDelete}>
@@ -87,12 +89,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 18,
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: 2,
   },
   stat: { alignItems: 'center', flex: 1 },
   statLabel: { marginBottom: 6 },
   statValue: { fontSize: 17, textAlign: 'center' },
-  waterButton: { paddingVertical: 15, alignItems: 'center' },
+  waterButton: { paddingVertical: 15, alignItems: 'center', marginTop: 6 },
   waterButtonText: {
     color: colors.textOnPrimary,
     fontFamily: 'Silkscreen_700Bold',

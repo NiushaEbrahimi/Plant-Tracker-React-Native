@@ -10,17 +10,17 @@ export const colors = {
   textSecondary: "#6B7268",
   textOnPrimary: "#FFFFFF",
 
-  primary: "#4A6741", // moss green
-  primaryDark: "#374E30",
-  primaryLight: "#7EA871",
+  primary: "#66b84d", // moss green
+  primaryDark: "#457238",
+  primaryLight: "#93c982",
 
-  waterFresh: "#4A6741", // just watered / plenty of time
+  waterFresh: "#6bab58", // just watered / plenty of timewaterSoon: "#E8A33D", // marigold — due in a day or
   waterSoon: "#E8A33D", // marigold — due in a day or two
   waterOverdue: "#C97B5D", // terracotta — overdue
 
-  outline: "#1A1A1A", // thick pixel border color, used everywhere instead of soft borders
-  hardShadow: "#1A1A1A", // solid offset "shadow" block behind cards/buttons
-  border: "#1A1A1A",
+  outline: "#273419", // thick pixel border color, used everywhere instead of soft borders
+  hardShadow: "#213517", // solid offset "shadow" block behind cards/buttons
+  border: "#2c3e21",
 };
 
 // Standard pixel-art metrics — reuse these instead of one-off numbers so

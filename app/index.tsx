@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { usePlantStore } from '../src/store/usePlantStore';
-import { PlantCard } from '../src/components/PlantCard';
+import React from 'react';
+import { FlatList, Image, StyleSheet, View } from 'react-native';
 import { EmptyState } from '../src/components/EmptyState';
 import { PixelButton } from '../src/components/Pixel';
+import { PlantCard } from '../src/components/PlantCard';
+import { usePlantStore } from '../src/store/usePlantStore';
 import { colors } from '../src/theme/colors';
 
 export default function HomeScreen() {
@@ -19,17 +19,19 @@ export default function HomeScreen() {
         contentContainerStyle={styles.list}
         ListEmptyComponent={<EmptyState />}
         renderItem={({ item }) => (
+          <View style={{marginTop:6, marginBottom:6}}>
           <PlantCard
             plant={item}
             onPress={() => router.push(`/plant/${item.id}`)}
             onWaterNow={() => waterPlant(item.id)}
           />
+          </View>
         )}
       />
 
       <View style={styles.fabWrap}>
         <PixelButton onPress={() => router.push('/add')} style={styles.fab}>
-          <Text style={styles.fabText}>+</Text>
+          <Image source={require('../assets/plus_icon.png')} style={{width:30, height:30}} />
         </PixelButton>
       </View>
     </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, pixel } from '../theme/colors';
 import { type } from '../theme/typography';
 import { Plant } from '../types/plant';
@@ -26,7 +26,7 @@ export function PlantCard({ plant, onPress, onWaterNow }: PlantCardProps) {
     <Pressable onPress={onPress}>
       <PixelPanel style={styles.card}>
         <WaterRing progress={progress}>
-          <PlantIcon icon={plant.name}/>
+          <PlantIcon icon={plant.icon}/>
         </WaterRing>
 
         <View style={styles.info}>
@@ -50,7 +50,7 @@ export function PlantCard({ plant, onPress, onWaterNow }: PlantCardProps) {
             pressed && styles.waterButtonPressed,
           ]}
         >
-          <Text style={styles.waterButtonText}>💧</Text>
+          <Image source={require('../../assets/droplet_icon.png')} style={{width:24,height:24}}/>
         </Pressable>
       </PixelPanel>
     </Pressable>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-    marginBottom: 6,
+    marginBottom: 4,
   },
   emoji: { fontSize: 24 },
   info: { flex: 1, marginLeft: 14, gap: 2 },

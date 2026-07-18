@@ -16,7 +16,7 @@ export const plantImages: Record<PlantIcon, ImageSourcePropType> = {
   monstera: require('../../assets/images/monstera.png'),
   succulent: require('../../assets/images/succulent.png'),
   fern: require('../../assets/images/fern.png'),
-  cactus: require('../../assets/images/cactus.png'),
+  cactus: require('../../assets/images/cactus2.png'),
   pothos: require('../../assets/images/pothos.png'),
   'snake-plant': require('../../assets/images/snakeplant.png'),
   flower: require('../../assets/images/flower.png'),

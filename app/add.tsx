@@ -105,13 +105,16 @@ export default function AddPlantScreen() {
         ))}
       </View>
 
-      <PixelButton
-        onPress={handleSave}
-        disabled={!canSave}
-        style={styles.saveButton}
-      >
-        <Text style={styles.saveButtonText}>Add Plant</Text>
-      </PixelButton>
+      <View style={styles.saveButtonContainer}>
+        <PixelButton
+          onPress={handleSave}
+          disabled={!canSave}
+          style={styles.saveButton}
+        >
+          <Text style={styles.saveButtonText}>Add Plant</Text>
+        </PixelButton>
+      </View>
+
     </ScrollView>
   );
 }
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     borderColor: colors.outline,
   },
   spacedLabel: { marginTop: 20 },
-  iconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 10 },
+  iconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 10, marginBottom: 5 },
   chip: {
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -144,8 +147,11 @@ const styles = StyleSheet.create({
   },
   chipText: { fontFamily: 'VT323_400Regular', fontSize: 17, color: colors.textPrimary },
   chipTextSelected: { color: colors.textOnPrimary },
+  saveButtonContainer: {
+    marginTop: 16,
+  },
   saveButton: {
-    marginTop: 36,
+    marginTop: 2,
     paddingVertical: 14,
     alignItems: 'center',
   },
