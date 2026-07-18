@@ -1,19 +1,17 @@
-// Two-role type system:
-// - "display" (Fredoka) for headers/titles — rounded, friendly, a little playful
-// - "body" (Nunito Sans) for everything else — calm and readable
-//
-// Load these with expo-font in App.tsx before rendering (see App.tsx).
+// Pixel-art type system:
+// - "display" (Silkscreen) for headers/titles/buttons — blocky pixel font
+// - "body" (VT323) for everything else — a lighter pixel font that stays
+//   readable at small sizes (Press Start 2P does NOT — avoid it below ~16px)
 export const fonts = {
-  display: 'Fredoka_600SemiBold',
-  displayBold: 'Fredoka_500Medium',
-  body: 'NunitoSans_400Regular',
-  bodySemibold: 'NunitoSans_700Bold',
+  display: 'Silkscreen_400Regular',
+  displayBold: 'Silkscreen_700Bold',
+  body: 'VT323_400Regular',
 };
 
 export const type = {
-  h1: { fontFamily: fonts.display, fontSize: 28, letterSpacing: 0.2 },
-  h2: { fontFamily: fonts.display, fontSize: 20, letterSpacing: 0.2 },
-  label: { fontFamily: fonts.bodySemibold, fontSize: 13, letterSpacing: 0.4 },
-  body: { fontFamily: fonts.body, fontSize: 15, lineHeight: 21 },
-  caption: { fontFamily: fonts.body, fontSize: 12, color: '#6B7268' },
+  h1: { fontFamily: fonts.displayBold, fontSize: 22, letterSpacing: 0.5 },
+  h2: { fontFamily: fonts.display, fontSize: 15, letterSpacing: 0.5 },
+  label: { fontFamily: fonts.display, fontSize: 11, letterSpacing: 0.5 },
+  body: { fontFamily: fonts.body, fontSize: 19, lineHeight: 22 },
+  caption: { fontFamily: fonts.body, fontSize: 16, color: '#6B7268' },
 };

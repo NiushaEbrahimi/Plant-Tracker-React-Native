@@ -1,10 +1,12 @@
 export type PlantIcon =
-  | 'monstera'
-  | 'succulent'
-  | 'fern'
-  | 'cactus'
-  | 'pothos'
-  | 'snake-plant';
+  | "monstera"
+  | "succulent"
+  | "fern"
+  | "cactus"
+  | "pothos"
+  | "snake-plant"
+  | "flower"
+  | "lily";
 
 export interface Plant {
   id: string;

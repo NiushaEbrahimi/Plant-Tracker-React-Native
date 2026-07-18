@@ -1,6 +1,8 @@
+import PlantIcon from '@/src/utils/plantIcons';
 import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
+import { PixelButton, PixelPanel } from '../../src/components/Pixel';
 import { WaterRing } from '../../src/components/WaterRing';
 import { usePlantStore } from '../../src/store/usePlantStore';
 import { colors } from '../../src/theme/colors';
@@ -10,7 +12,6 @@ import {
   wateringProgress,
   wateringStatusLabel,
 } from '../../src/utils/dateHelpers';
-import { plantEmoji } from '../../src/utils/plantIcons';
 
 export default function PlantDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -43,25 +44,22 @@ export default function PlantDetailScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.hero}>
-        <WaterRing progress={wateringProgress(plant)} size={120} strokeWidth={8}>
-          <Text style={styles.emoji}>{plantEmoji[plant.icon]}</Text>
+        <WaterRing progress={wateringProgress(plant)} size={120} strokeWidth={4}>
+          <PlantIcon icon={plant.icon}/>
         </WaterRing>
         <Text style={[type.h1, styles.name]}>{plant.name}</Text>
         <Text style={[type.body, styles.species]}>{plant.species}</Text>
       </View>
 
-      <View style={styles.statsRow}>
+      <PixelPanel style={styles.statsRow}>
         <Stat label="Status" value={wateringStatusLabel(plant)} />
         <Stat label="Last watered" value={formatLastWatered(plant)} />
         <Stat label="Every" value={`${plant.waterIntervalDays} days`} />
-      </View>
+      </PixelPanel>
 
-      <Pressable
-        style={styles.waterButton}
-        onPress={() => waterPlant(plant.id)}
-      >
+      <PixelButton onPress={() => waterPlant(plant.id)} style={styles.waterButton}>
         <Text style={styles.waterButtonText}>💧 Water now</Text>
-      </Pressable>
+      </PixelButton>
 
       <Pressable style={styles.deleteButton} onPress={confirmDelete}>
         <Text style={styles.deleteButtonText}>Remove plant</Text>
@@ -73,8 +71,8 @@ export default function PlantDetailScreen() {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.stat}>
-      <Text style={[type.caption, styles.statLabel]}>{label}</Text>
-      <Text style={[type.h2, styles.statValue]}>{value}</Text>
+      <Text style={[type.label, styles.statLabel]}>{label}</Text>
+      <Text style={[type.body, styles.statValue]}>{value}</Text>
     </View>
   );
 }
@@ -82,31 +80,24 @@ function Stat({ label, value }: { label: string; value: string }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background, padding: 24 },
   hero: { alignItems: 'center', marginTop: 12, marginBottom: 24 },
-  emoji: { fontSize: 46 },
+  emoji: { fontSize: 40 },
   name: { marginTop: 16 },
   species: { color: colors.textSecondary, marginTop: 2 },
   statsRow: {
     flexDirection: 'row',
-    backgroundColor: colors.surface,
-    borderRadius: 18,
     padding: 18,
     justifyContent: 'space-between',
     marginBottom: 24,
   },
   stat: { alignItems: 'center', flex: 1 },
-  statLabel: { marginBottom: 4 },
-  statValue: { fontSize: 15, textAlign: 'center' },
-  waterButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 15,
-    alignItems: 'center',
-  },
+  statLabel: { marginBottom: 6 },
+  statValue: { fontSize: 17, textAlign: 'center' },
+  waterButton: { paddingVertical: 15, alignItems: 'center' },
   waterButtonText: {
     color: colors.textOnPrimary,
-    fontFamily: 'Fredoka_600SemiBold',
-    fontSize: 16,
+    fontFamily: 'Silkscreen_700Bold',
+    fontSize: 15,
   },
   deleteButton: { marginTop: 16, alignItems: 'center', paddingVertical: 10 },
-  deleteButtonText: { color: colors.waterOverdue, fontFamily: 'NunitoSans_400Regular' },
+  deleteButtonText: { color: colors.waterOverdue, fontFamily: 'VT323_400Regular', fontSize: 17 },
 });

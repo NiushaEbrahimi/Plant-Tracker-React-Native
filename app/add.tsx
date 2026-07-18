@@ -1,18 +1,19 @@
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
   Pressable,
   ScrollView,
   StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import { router } from 'expo-router';
+import { PixelButton } from '../src/components/Pixel';
 import { usePlantStore } from '../src/store/usePlantStore';
-import { colors } from '../src/theme/colors';
+import { colors, pixel } from '../src/theme/colors';
 import { type } from '../src/theme/typography';
 import { PlantIcon } from '../src/types/plant';
-import { plantIconOptions } from '../src/utils/plantIcons';
+import PlantIcons, { plantIconOptions } from '../src/utils/plantIcons';
 
 const INTERVAL_PRESETS = [3, 5, 7, 10, 14];
 
@@ -64,17 +65,18 @@ export default function AddPlantScreen() {
             key={opt.value}
             onPress={() => setIcon(opt.value)}
             style={[
-              styles.iconChip,
-              icon === opt.value && styles.iconChipSelected,
+              styles.chip,
+              icon === opt.value && styles.chipSelected,
             ]}
           >
             <Text
               style={[
-                styles.iconChipText,
-                icon === opt.value && styles.iconChipTextSelected,
+                styles.chipText,
+                icon === opt.value && styles.chipTextSelected,
               ]}
             >
-              {opt.label}
+              <PlantIcons icon={opt.value} />
+              {opt.value}
             </Text>
           </Pressable>
         ))}
@@ -87,14 +89,14 @@ export default function AddPlantScreen() {
             key={days}
             onPress={() => setInterval(days)}
             style={[
-              styles.iconChip,
-              interval === days && styles.iconChipSelected,
+              styles.chip,
+              interval === days && styles.chipSelected,
             ]}
           >
             <Text
               style={[
-                styles.iconChipText,
-                interval === days && styles.iconChipTextSelected,
+                styles.chipText,
+                interval === days && styles.chipTextSelected,
               ]}
             >
               {days}d
@@ -103,13 +105,13 @@ export default function AddPlantScreen() {
         ))}
       </View>
 
-      <Pressable
-        style={[styles.saveButton, !canSave && styles.saveButtonDisabled]}
+      <PixelButton
         onPress={handleSave}
         disabled={!canSave}
+        style={styles.saveButton}
       >
         <Text style={styles.saveButtonText}>Add Plant</Text>
-      </Pressable>
+      </PixelButton>
     </ScrollView>
   );
 }
@@ -119,43 +121,37 @@ const styles = StyleSheet.create({
   content: { padding: 20, paddingBottom: 60 },
   input: {
     backgroundColor: colors.surface,
-    borderRadius: 14,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 15,
-    fontFamily: 'NunitoSans_400Regular',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    fontSize: 19,
+    fontFamily: 'VT323_400Regular',
     color: colors.textPrimary,
     marginTop: 8,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderWidth: pixel.borderWidth,
+    borderColor: colors.outline,
   },
   spacedLabel: { marginTop: 20 },
-  iconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 10 },
-  iconChip: {
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    borderRadius: 20,
+  iconRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 10 },
+  chip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
+    borderWidth: pixel.borderWidth,
+    borderColor: colors.outline,
   },
-  iconChipSelected: {
+  chipSelected: {
     backgroundColor: colors.primary,
-    borderColor: colors.primary,
   },
-  iconChipText: { fontFamily: 'NunitoSans_400Regular', color: colors.textPrimary },
-  iconChipTextSelected: { color: colors.textOnPrimary },
+  chipText: { fontFamily: 'VT323_400Regular', fontSize: 17, color: colors.textPrimary },
+  chipTextSelected: { color: colors.textOnPrimary },
   saveButton: {
     marginTop: 36,
-    backgroundColor: colors.primary,
-    borderRadius: 16,
-    paddingVertical: 15,
+    paddingVertical: 14,
     alignItems: 'center',
   },
-  saveButtonDisabled: { opacity: 0.5 },
   saveButtonText: {
     color: colors.textOnPrimary,
-    fontFamily: 'Fredoka_600SemiBold',
-    fontSize: 16,
+    fontFamily: 'Silkscreen_700Bold',
+    fontSize: 15,
   },
 });

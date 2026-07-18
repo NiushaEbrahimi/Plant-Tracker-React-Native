@@ -1,23 +1,18 @@
-import React, { useCallback } from 'react';
+import { Silkscreen_400Regular, Silkscreen_700Bold, useFonts as useSilkscreen } from '@expo-google-fonts/silkscreen';
+import { useFonts as useVT323, VT323_400Regular } from '@expo-google-fonts/vt323';
+
 import { Stack } from 'expo-router';
-import { useFonts, Fredoka_500Medium, Fredoka_600SemiBold } from '@expo-google-fonts/fredoka';
-import {
-  NunitoSans_400Regular,
-  NunitoSans_700Bold,
-} from '@expo-google-fonts/nunito-sans';
 import * as SplashScreen from 'expo-splash-screen';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { colors } from '../src/theme/colors';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    Fredoka_500Medium,
-    Fredoka_600SemiBold,
-    NunitoSans_400Regular,
-    NunitoSans_700Bold,
-  });
+  const [silkscreenLoaded] = useSilkscreen({ Silkscreen_400Regular, Silkscreen_700Bold });
+  const [vt323Loaded] = useVT323({ VT323_400Regular });
+  const fontsLoaded = silkscreenLoaded && vt323Loaded;
 
   const onLayout = useCallback(() => {
     if (fontsLoaded) SplashScreen.hideAsync();

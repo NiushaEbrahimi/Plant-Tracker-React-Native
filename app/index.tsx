@@ -1,9 +1,10 @@
-import { router } from 'expo-router';
 import React from 'react';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { EmptyState } from '../src/components/EmptyState';
-import { PlantCard } from '../src/components/PlantCard';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { router } from 'expo-router';
 import { usePlantStore } from '../src/store/usePlantStore';
+import { PlantCard } from '../src/components/PlantCard';
+import { EmptyState } from '../src/components/EmptyState';
+import { PixelButton } from '../src/components/Pixel';
 import { colors } from '../src/theme/colors';
 
 export default function HomeScreen() {
@@ -20,18 +21,17 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <PlantCard
             plant={item}
-            onPress={() => router.push({
-              pathname: '/plant/[id]',
-              params: { id: item.id }
-            })}
+            onPress={() => router.push(`/plant/${item.id}`)}
             onWaterNow={() => waterPlant(item.id)}
           />
         )}
       />
 
-      <Pressable style={styles.fab} onPress={() => router.push('/add')}>
-        <Text style={styles.fabText}>+</Text>
-      </Pressable>
+      <View style={styles.fabWrap}>
+        <PixelButton onPress={() => router.push('/add')} style={styles.fab}>
+          <Text style={styles.fabText}>+</Text>
+        </PixelButton>
+      </View>
     </View>
   );
 }
@@ -39,21 +39,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   list: { padding: 20, paddingBottom: 100 },
+  fabWrap: { position: 'absolute', right: 24, bottom: 32 },
   fab: {
-    position: 'absolute',
-    right: 24,
-    bottom: 32,
     width: 56,
     height: 56,
-    borderRadius: 28,
-    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 1,
-    shadowRadius: 12,
-    elevation: 4,
   },
   fabText: { color: colors.textOnPrimary, fontSize: 28, marginTop: -2 },
 });
