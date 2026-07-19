@@ -41,7 +41,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.background },
+  container: { flex: 1, backgroundColor: colors.background, zIndex: 100 },
   list: { padding: 20, paddingBottom: 100 },
   cardWrapper: { marginTop: 6, marginBottom: 6 },
   fabWrap: { position: 'absolute', right: 24, bottom: 32, zIndex:100 },

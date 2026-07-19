@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     right: 0,
     height: ROWS * PIXEL_SIZE,
     overflow: 'hidden',
+    zIndex: -10,
   },
   row: {
     flexDirection: 'row',
