@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Pressable, StyleSheet, ViewStyle, PressableProps } from 'react-native';
+import { View, Pressable, StyleSheet, ViewStyle, StyleProp, PressableProps } from 'react-native';
 import { colors, pixel } from '../theme/colors';
 
 /**
@@ -18,7 +18,7 @@ export function PixelPanel({
   backgroundColor = colors.surface,
 }: {
   children: React.ReactNode;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   backgroundColor?: string;
 }) {
   return (
