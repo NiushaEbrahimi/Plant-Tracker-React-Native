@@ -32,7 +32,7 @@ function seededRandom(seed: number) {
 }
 
 type PixelData = {
-  id: number;
+  id?: number;
   visible: boolean;
   color: string;
   holdOn: number;
@@ -114,8 +114,7 @@ export default function BackgroundAbsolute() {
                 color={p.color}
                 holdOn={p.holdOn}
                 holdOff={p.holdOff}
-                initialDelay={p.initialDelay}
-              />
+                initialDelay={p.initialDelay}/>
             ))}
           </View>
         );
