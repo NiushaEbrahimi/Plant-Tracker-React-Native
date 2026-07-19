@@ -1,3 +1,4 @@
+import BackgroundAbsolte from '@/src/components/BackgroundAbsolute';
 import { router } from 'expo-router';
 import React from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
@@ -34,6 +35,7 @@ export default function HomeScreen() {
           <Image source={require('../assets/plus_icon.png')} style={styles.fabIcon} />
         </PixelButton>
       </View>
+      <BackgroundAbsolte/>
     </View>
   );
 }
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   list: { padding: 20, paddingBottom: 100 },
   cardWrapper: { marginTop: 6, marginBottom: 6 },
-  fabWrap: { position: 'absolute', right: 24, bottom: 32 },
+  fabWrap: { position: 'absolute', right: 24, bottom: 32, zIndex:100 },
   fab: {
     width: 60,
     height: 60,

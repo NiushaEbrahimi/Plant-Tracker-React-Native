@@ -6,7 +6,22 @@ export type PlantIcon =
   | "pothos"
   | "snake-plant"
   | "flower"
-  | "lily";
+  | "lily"
+  | "aglaonema"
+  | "aloe-vera"
+  | "astrophytum"
+  | "barrel cactus"
+  | "calathea"
+  | "devils-ivy"
+  | "haworthia"
+  | "herbs"
+  | "rose"
+  | "moonglow"
+  | "plant"
+  | "prickly-pear"
+  | "rubber-plant"
+  | "sensoria"
+  | "zamioculcas";
 
 export interface Plant {
   id: string;

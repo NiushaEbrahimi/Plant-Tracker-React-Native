@@ -1,13 +1,14 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 import { type } from '../theme/typography';
+import PixelPlant from './PixelPlant';
 
 export function EmptyState() {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Image source={require('../../assets/images/icon.png')} style={styles.icon} />
+        <PixelPlant style={styles.icon}/>
       </View>
       <Text style={[type.h1, styles.title]}>No plants yet</Text>
       <Text style={[type.body, styles.subtitle]}>
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 24,
   },
-  icon: { width: 100, height: 100 },
+  icon: { width: 200, height: 200 },
   title: { color: colors.textPrimary, marginBottom: 8 },
   subtitle: { color: colors.textSecondary, textAlign: 'center', lineHeight: 26 },
   hint: {
