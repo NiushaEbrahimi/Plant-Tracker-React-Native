@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Plant } from '../types/plant';
 import { samplePlants } from '../data/samplePlants';
+import { scheduleWaterReminder, cancelWaterReminder } from '../utils/notifications';
 
 interface PlantStore {
   plants: Plant[];
@@ -14,46 +15,52 @@ interface PlantStore {
 
 export const usePlantStore = create<PlantStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       plants: samplePlants,
 
-      addPlant: (plant) =>
+      addPlant: (plant) => {
+        const newPlant: Plant = {
+          ...plant,
+          id: Date.now().toString(),
+          lastWateredAt: new Date().toISOString(),
+        };
         set((state) => ({
-          plants: [
-            ...state.plants,
-            {
-              ...plant,
-              id: Date.now().toString(),
-              lastWateredAt: new Date().toISOString(),
-            },
-          ],
-        })),
+          plants: [...state.plants, newPlant],
+        }));
+        scheduleWaterReminder(newPlant);
+      },
 
-      waterPlant: (id) =>
-        set((state) => ({
-          plants: state.plants.map((p) =>
-            p.id === id ? { ...p, lastWateredAt: new Date().toISOString() } : p
-          ),
-        })),
+      waterPlant: (id) => {
+        const updated = get().plants.map((p) =>
+          p.id === id ? { ...p, lastWateredAt: new Date().toISOString() } : p
+        );
+        set({ plants: updated });
+        const plant = updated.find((p) => p.id === id);
+        if (plant) scheduleWaterReminder(plant);
+      },
 
-      setLastWateredDaysAgo: (id, days) =>
-        set((state) => ({
-          plants: state.plants.map((p) =>
-            p.id === id
-              ? {
-                  ...p,
-                  lastWateredAt: new Date(
-                    Date.now() - days * 86400000
-                  ).toISOString(),
-                }
-              : p
-          ),
-        })),
+      setLastWateredDaysAgo: (id, days) => {
+        const updated = get().plants.map((p) =>
+          p.id === id
+            ? {
+                ...p,
+                lastWateredAt: new Date(
+                  Date.now() - days * 86400000
+                ).toISOString(),
+              }
+            : p
+        );
+        set({ plants: updated });
+        const plant = updated.find((p) => p.id === id);
+        if (plant) scheduleWaterReminder(plant);
+      },
 
-      removePlant: (id) =>
+      removePlant: (id) => {
+        cancelWaterReminder(id);
         set((state) => ({
           plants: state.plants.filter((p) => p.id !== id),
-        })),
+        }));
+      },
     }),
     {
       name: 'plant-care-storage',

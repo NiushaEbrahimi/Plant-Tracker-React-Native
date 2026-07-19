@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,7 +14,7 @@ import { usePlantStore } from '../src/store/usePlantStore';
 import { colors, pixel } from '../src/theme/colors';
 import { type } from '../src/theme/typography';
 import { PlantIcon } from '../src/types/plant';
-import PlantIcons, { plantIconOptions } from '../src/utils/plantIcons';
+import { plantIconOptions, plantImages } from '../src/utils/plantIcons';
 
 const INTERVAL_PRESETS = [3, 5, 7, 10, 14];
 
@@ -69,7 +70,10 @@ export default function AddPlantScreen() {
               icon === opt.value && styles.iconChipSelected,
             ]}
           >
-            <PlantIcons icon={opt.value} />
+            <Image
+              source={plantImages[opt.value]}
+              style={styles.iconImage}
+            />
             <Text
               style={[
                 styles.iconChipLabel,
@@ -147,15 +151,19 @@ const styles = StyleSheet.create({
   },
   iconChip: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     paddingVertical: 8,
     backgroundColor: colors.surface,
     borderWidth: pixel.borderWidth,
     borderColor: colors.outline,
-    minWidth: 68,
   },
   iconChipSelected: {
     backgroundColor: colors.primary,
+  },
+  iconImage: {
+    width: 48,
+    height: 48,
+    resizeMode: 'contain',
   },
   iconChipLabel: {
     fontFamily: 'VT323_400Regular',
