@@ -1,4 +1,4 @@
-import BackgroundAbsolte from '@/src/components/BackgroundAbsolute';
+import BackgroundAbsolute from '@/src/components/BackgroundAbsolute';
 import { router } from 'expo-router';
 import React from 'react';
 import { FlatList, Image, StyleSheet, View } from 'react-native';
@@ -35,7 +35,7 @@ export default function HomeScreen() {
           <Image source={require('../assets/plus_icon.png')} style={styles.fabIcon} />
         </PixelButton>
       </View>
-      <BackgroundAbsolte/>
+      <BackgroundAbsolute/>
     </View>
   );
 }
