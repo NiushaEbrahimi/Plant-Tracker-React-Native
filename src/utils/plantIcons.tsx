@@ -23,8 +23,8 @@ export const plantImages: Record<PlantIcon, ImageSourcePropType> = {
   lily: require('../../assets/images/lily.jpeg'),
 };
 
-export default function PlantIcons({ icon }: { icon: PlantIcon }) {
+export default function PlantIcons({ icon, size = 40 }: { icon: PlantIcon; size?: number }) {
   return (
-    <Image source={plantImages[icon]} style={{ width: 40, height: 40 }}/>
+    <Image source={plantImages[icon]} style={{ width: size, height: size }} />
   );
 }

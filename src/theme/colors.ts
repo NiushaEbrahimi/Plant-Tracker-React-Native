@@ -14,7 +14,7 @@ export const colors = {
   primaryDark: "#457238",
   primaryLight: "#93c982",
 
-  waterFresh: "#6bab58", // just watered / plenty of timewaterSoon: "#E8A33D", // marigold — due in a day or
+  waterFresh: "#6bab58", // just watered / plenty of time
   waterSoon: "#E8A33D", // marigold — due in a day or two
   waterOverdue: "#C97B5D", // terracotta — overdue
 

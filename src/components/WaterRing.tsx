@@ -43,17 +43,22 @@ export function WaterRing({
         },
       ]}
     >
+      {/* Background — always visible */}
       <View style={[styles.empty, { width: innerSize, height: innerSize }]} />
-      <View
-        style={[
-          styles.fill,
-          {
-            width: innerSize,
-            height: innerSize * clamped,
-            backgroundColor: fillColor,
-          },
-        ]}
-      />
+      {/* Fill bar — rises from the bottom */}
+      {clamped > 0 && (
+        <View
+          style={[
+            styles.fill,
+            {
+              width: innerSize,
+              height: Math.max(2, innerSize * clamped),
+              backgroundColor: fillColor,
+            },
+          ]}
+        />
+      )}
+      {/* Icon on top */}
       <View style={styles.center}>{children}</View>
     </View>
   );
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
   fill: {
     position: 'absolute',
     bottom: 0,
+    zIndex: 1,
   },
   center: {
     position: 'absolute',
@@ -83,5 +89,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
   },
 });

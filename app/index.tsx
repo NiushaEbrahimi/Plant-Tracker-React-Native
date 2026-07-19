@@ -19,19 +19,19 @@ export default function HomeScreen() {
         contentContainerStyle={styles.list}
         ListEmptyComponent={<EmptyState />}
         renderItem={({ item }) => (
-          <View style={{marginTop:6, marginBottom:6}}>
-          <PlantCard
-            plant={item}
-            onPress={() => router.push(`/plant/${item.id}`)}
-            onWaterNow={() => waterPlant(item.id)}
-          />
+          <View style={styles.cardWrapper}>
+            <PlantCard
+              plant={item}
+              onPress={() => router.push(`/plant/${item.id}`)}
+              onWaterNow={() => waterPlant(item.id)}
+            />
           </View>
         )}
       />
 
       <View style={styles.fabWrap}>
         <PixelButton onPress={() => router.push('/add')} style={styles.fab}>
-          <Image source={require('../assets/plus_icon.png')} style={{width:30, height:30}} />
+          <Image source={require('../assets/plus_icon.png')} style={styles.fabIcon} />
         </PixelButton>
       </View>
     </View>
@@ -41,12 +41,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
   list: { padding: 20, paddingBottom: 100 },
+  cardWrapper: { marginTop: 6, marginBottom: 6 },
   fabWrap: { position: 'absolute', right: 24, bottom: 32 },
   fab: {
-    width: 56,
-    height: 56,
+    width: 60,
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fabText: { color: colors.textOnPrimary, fontSize: 28, marginTop: -2 },
+  fabIcon: { width: 30, height: 30 },
 });

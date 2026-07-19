@@ -27,8 +27,13 @@ export function wateringStatusLabel(plant: Plant): string {
 }
 
 export function formatLastWatered(plant: Plant): string {
-  const days = Math.floor((Date.now() - new Date(plant.lastWateredAt).getTime()) / DAY_MS);
+  const days = daysSinceWatered(plant);
   if (days === 0) return 'Watered today';
   if (days === 1) return 'Watered yesterday';
   return `Watered ${days}d ago`;
+}
+
+/** Whole days since this plant was last watered. */
+export function daysSinceWatered(plant: Plant): number {
+  return Math.floor((Date.now() - new Date(plant.lastWateredAt).getTime()) / DAY_MS);
 }

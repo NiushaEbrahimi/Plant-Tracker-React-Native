@@ -65,17 +65,17 @@ export default function AddPlantScreen() {
             key={opt.value}
             onPress={() => setIcon(opt.value)}
             style={[
-              styles.chip,
-              icon === opt.value && styles.chipSelected,
+              styles.iconChip,
+              icon === opt.value && styles.iconChipSelected,
             ]}
           >
+            <PlantIcons icon={opt.value} />
             <Text
               style={[
-                styles.chipText,
-                icon === opt.value && styles.chipTextSelected,
+                styles.iconChipLabel,
+                icon === opt.value && styles.iconChipLabelSelected,
               ]}
             >
-              <PlantIcons icon={opt.value} />
               {opt.value}
             </Text>
           </Pressable>
@@ -144,6 +144,28 @@ const styles = StyleSheet.create({
   },
   chipSelected: {
     backgroundColor: colors.primary,
+  },
+  iconChip: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: colors.surface,
+    borderWidth: pixel.borderWidth,
+    borderColor: colors.outline,
+    minWidth: 68,
+  },
+  iconChipSelected: {
+    backgroundColor: colors.primary,
+  },
+  iconChipLabel: {
+    fontFamily: 'VT323_400Regular',
+    fontSize: 14,
+    color: colors.textPrimary,
+    marginTop: 4,
+    textTransform: 'capitalize',
+  },
+  iconChipLabelSelected: {
+    color: colors.textOnPrimary,
   },
   chipText: { fontFamily: 'VT323_400Regular', fontSize: 17, color: colors.textPrimary },
   chipTextSelected: { color: colors.textOnPrimary },

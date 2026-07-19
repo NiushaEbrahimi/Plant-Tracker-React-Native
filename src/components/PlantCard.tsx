@@ -24,7 +24,10 @@ export function PlantCard({ plant, onPress, onWaterNow }: PlantCardProps) {
 
   return (
     <Pressable onPress={onPress}>
-      <PixelPanel style={styles.card}>
+      <PixelPanel
+        backgroundColor={overdue ? colors.waterOverdue + '15' : colors.surface}
+        style={[styles.card, overdue && styles.cardOverdue]}
+      >
         <WaterRing progress={progress}>
           <PlantIcon icon={plant.icon}/>
         </WaterRing>
@@ -50,7 +53,7 @@ export function PlantCard({ plant, onPress, onWaterNow }: PlantCardProps) {
             pressed && styles.waterButtonPressed,
           ]}
         >
-          <Image source={require('../../assets/droplet_icon.png')} style={{width:24,height:24}}/>
+          <Image source={require('../../assets/droplet_icon.png')} style={styles.waterButtonIcon} />
         </Pressable>
       </PixelPanel>
     </Pressable>
@@ -64,7 +67,9 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 4,
   },
-  emoji: { fontSize: 24 },
+  cardOverdue: {
+    borderColor: colors.waterOverdue,
+  },
   info: { flex: 1, marginLeft: 14, gap: 2 },
   species: { marginBottom: 2 },
   waterButton: {
@@ -77,5 +82,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   waterButtonPressed: { backgroundColor: colors.background },
-  waterButtonText: { fontSize: 16 },
+  waterButtonIcon: { width: 24, height: 24 },
 });

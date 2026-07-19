@@ -8,6 +8,7 @@ interface PlantStore {
   plants: Plant[];
   addPlant: (plant: Omit<Plant, 'id' | 'lastWateredAt'>) => void;
   waterPlant: (id: string) => void;
+  setLastWateredDaysAgo: (id: string, days: number) => void;
   removePlant: (id: string) => void;
 }
 
@@ -32,6 +33,20 @@ export const usePlantStore = create<PlantStore>()(
         set((state) => ({
           plants: state.plants.map((p) =>
             p.id === id ? { ...p, lastWateredAt: new Date().toISOString() } : p
+          ),
+        })),
+
+      setLastWateredDaysAgo: (id, days) =>
+        set((state) => ({
+          plants: state.plants.map((p) =>
+            p.id === id
+              ? {
+                  ...p,
+                  lastWateredAt: new Date(
+                    Date.now() - days * 86400000
+                  ).toISOString(),
+                }
+              : p
           ),
         })),
 

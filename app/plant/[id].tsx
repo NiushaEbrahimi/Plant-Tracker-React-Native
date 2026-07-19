@@ -1,13 +1,14 @@
 import PlantIcon from '@/src/utils/plantIcons';
 import { router, useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Alert, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { PixelButton, PixelPanel } from '../../src/components/Pixel';
 import { WaterRing } from '../../src/components/WaterRing';
 import { usePlantStore } from '../../src/store/usePlantStore';
-import { colors } from '../../src/theme/colors';
+import { colors, pixel } from '../../src/theme/colors';
 import { type } from '../../src/theme/typography';
 import {
+  daysSinceWatered,
   formatLastWatered,
   wateringProgress,
   wateringStatusLabel,
@@ -17,7 +18,13 @@ export default function PlantDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const plant = usePlantStore((s) => s.plants.find((p) => p.id === id));
   const waterPlant = usePlantStore((s) => s.waterPlant);
+  const setLastWateredDaysAgo = usePlantStore((s) => s.setLastWateredDaysAgo);
   const removePlant = usePlantStore((s) => s.removePlant);
+
+  const daysAgo = useMemo(
+    () => (plant ? daysSinceWatered(plant) : 0),
+    [plant?.lastWateredAt]
+  );
 
   if (!plant) {
     return (
@@ -41,11 +48,16 @@ export default function PlantDetailScreen() {
     ]);
   }
 
+  function adjustDays(delta: number) {
+    const next = Math.max(0, daysAgo + delta);
+    setLastWateredDaysAgo(plant!.id, next);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.hero}>
-        <WaterRing progress={wateringProgress(plant)} size={120} strokeWidth={4}>
-          <PlantIcon icon={plant.icon}/>
+        <WaterRing progress={wateringProgress(plant)} size={160} strokeWidth={4}>
+          <PlantIcon icon={plant.icon} size={140} />
         </WaterRing>
         <Text style={[type.h1, styles.name]}>{plant.name}</Text>
         <Text style={[type.body, styles.species]}>{plant.species}</Text>
@@ -59,8 +71,42 @@ export default function PlantDetailScreen() {
         </PixelPanel>
       </View>
 
+      <View style={styles.daysAgoSection}>
+        <Text style={[type.label, styles.daysAgoLabel]}>DAYS AGO</Text>
+        <PixelPanel style={styles.daysAgoRow}>
+          <Pressable
+            onPress={() => adjustDays(-1)}
+            disabled={daysAgo <= 0}
+            style={({ pressed }) => [
+              styles.daysAgoButton,
+              pressed && styles.daysAgoButtonPressed,
+              daysAgo <= 0 && styles.daysAgoButtonDisabled,
+            ]}
+          >
+            <Text style={styles.daysAgoButtonText}>-</Text>
+          </Pressable>
+
+          <View style={styles.daysAgoValueContainer}>
+            <Text style={styles.daysAgoValue}>{daysAgo}</Text>
+          </View>
+
+          <Pressable
+            onPress={() => adjustDays(1)}
+            style={({ pressed }) => [
+              styles.daysAgoButton,
+              pressed && styles.daysAgoButtonPressed,
+            ]}
+          >
+            <Text style={styles.daysAgoButtonText}>+</Text>
+          </Pressable>
+        </PixelPanel>
+      </View>
+
       <PixelButton onPress={() => waterPlant(plant.id)} style={styles.waterButton}>
-        <Text style={styles.waterButtonText}><Image source={require("../../assets/droplet_icon.png")} style={{width:26,height:26}}/> Water now</Text>
+        <View style={styles.waterButtonContent}>
+          <Image source={require("../../assets/droplet_icon.png")} style={styles.waterButtonIcon} />
+          <Text style={styles.waterButtonText}>Water now</Text>
+        </View>
       </PixelButton>
 
       <Pressable style={styles.deleteButton} onPress={confirmDelete}>
@@ -82,19 +128,58 @@ function Stat({ label, value }: { label: string; value: string }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background, padding: 24 },
   hero: { alignItems: 'center', marginTop: 12, marginBottom: 24 },
-  emoji: { fontSize: 40 },
   name: { marginTop: 16 },
   species: { color: colors.textSecondary, marginTop: 2 },
   statsRow: {
     flexDirection: 'row',
-    padding: 18,
+    padding: 20,
     justifyContent: 'space-between',
     marginBottom: 2,
   },
   stat: { alignItems: 'center', flex: 1 },
-  statLabel: { marginBottom: 6 },
+  statLabel: { marginBottom: 8 },
   statValue: { fontSize: 17, textAlign: 'center' },
-  waterButton: { paddingVertical: 15, alignItems: 'center', marginTop: 6 },
+  daysAgoSection: { marginTop: 16 },
+  daysAgoLabel: { marginBottom: 8 },
+  daysAgoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    gap: 0,
+  },
+  daysAgoButton: {
+    width: 44,
+    height: 44,
+    backgroundColor: colors.surfaceMuted,
+    borderWidth: pixel.borderWidth,
+    borderColor: colors.outline,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  daysAgoButtonPressed: { backgroundColor: colors.background },
+  daysAgoButtonDisabled: { opacity: 0.4 },
+  daysAgoButtonText: {
+    fontFamily: 'Silkscreen_700Bold',
+    fontSize: 20,
+    color: colors.textPrimary,
+  },
+  daysAgoValueContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  daysAgoValue: {
+    fontFamily: 'Silkscreen_700Bold',
+    fontSize: 28,
+    color: colors.textPrimary,
+  },
+  waterButton: { paddingVertical: 15, alignItems: 'center', marginTop: 16 },
+  waterButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  waterButtonIcon: { width: 26, height: 26 },
   waterButtonText: {
     color: colors.textOnPrimary,
     fontFamily: 'Silkscreen_700Bold',
