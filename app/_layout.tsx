@@ -4,12 +4,22 @@ import { useFonts as useVT323, VT323_400Regular } from '@expo-google-fonts/vt323
 import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback, useEffect } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Platform, Pressable, Text, View } from 'react-native';
 import { usePlantStore } from '../src/store/usePlantStore';
 import { colors } from '../src/theme/colors';
 import { requestPermissions, rescheduleAllReminders } from '../src/utils/notifications';
 
 SplashScreen.preventAutoHideAsync();
+
+const isWeb = Platform.OS === 'web';
+
+function handleBack() {
+  if (router.canGoBack()) {
+    router.back();
+  } else {
+    router.replace('/');
+  }
+}
 
 export default function RootLayout() {
   const [silkscreenLoaded] = useSilkscreen({ Silkscreen_400Regular, Silkscreen_700Bold });
@@ -45,14 +55,28 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: 'My Plants' }} />
         <Stack.Screen
           name="add"
-          options={{ title: 'Add Plant', presentation: 'modal' }}
+          options={{
+            title: 'Add Plant',
+            presentation: isWeb ? 'card' : 'modal',
+            ...(isWeb
+              ? {
+                  headerLeft: () => (
+                    <Pressable onPress={handleBack}>
+                      <Text style={{ fontFamily: 'Silkscreen_400Regular', fontSize: 16, color: colors.primary, paddingHorizontal: 6 }}>
+                        {'< Back'}
+                      </Text>
+                    </Pressable>
+                  ),
+                }
+              : {}),
+          }}
         />
         <Stack.Screen
           name="plant/[id]"
           options={{
             title: '',
             headerLeft: () => (
-              <Pressable onPress={()=>router.back()}>
+              <Pressable onPress={handleBack}>
                 <Text style={{ fontFamily: 'Silkscreen_400Regular', fontSize: 16, color: colors.primary, paddingHorizontal: 6 }}>
                   {'< Plants'}
                 </Text>
