@@ -2,11 +2,12 @@
 <p align="center">
   <img src="https://img.shields.io/badge/status-completed-brightgreen" alt="Status">
 </p>
-<p align="center"> <img src="./assets/demo.gif" alt="Project Demo" width="350" height="500"></p>
+<p align="center"> <img src="./assets/demo.gif" alt="Project Demo" width="350"></p>
 
 A pixel-art themed plant care app built with React Native and Expo. Track your houseplants, get watering reminders, and enjoy a retro 8-bit aesthetic.
 
 ## Demo
+(!! keep in mind that if you're visiting with laptop, this is for mobile and your page will look off, try it with a mobile width in inspect F12)
 Live preview:
 [👁️ planttrackerapp.vercel.app](https://planttrackerapp.vercel.app/)
 
